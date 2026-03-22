@@ -3,7 +3,7 @@
 import { Command } from 'commander';
 import debug from 'debug';
 
-import { PageLoader } from './PageLoader';
+import { PageLoader } from './PageLoader.js';
 
 const originalError = console.error;
 console.error = (...args) => {
