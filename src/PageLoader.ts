@@ -16,7 +16,6 @@ interface IExtractedResource {
     responseType: AxiosRequestConfig['responseType'];
     element: AnyNode;
     tag: keyof typeof resources;
-    shouldDownload?: boolean;
 }
 
 const resources: Record<
@@ -25,20 +24,15 @@ const resources: Record<
 > = {
     img: {
         attribute: 'src',
-        type: 'arraybuffer',
-        shouldDownload: () => true
+        type: 'arraybuffer'
     },
     link: {
         attribute: 'href',
-        type: 'arraybuffer',
-        shouldDownload: (element: AnyNode) => {
-            return 'attribs' in element && element.attribs.rel !== 'canonical';
-        }
+        type: 'arraybuffer'
     },
     script: {
         attribute: 'src',
-        type: 'arraybuffer',
-        shouldDownload: () => true
+        type: 'arraybuffer'
     }
 };
 
@@ -93,7 +87,6 @@ export class PageLoader {
             extractedResources.map((resource) => ({
                 url: resource.url,
                 fileName: resource.fileName,
-                shouldDownload: resource.shouldDownload,
                 tag: resource.tag,
                 responseType: resource.responseType
             }))
@@ -128,8 +121,7 @@ export class PageLoader {
                     fileName: getResourceName(parsedUrl.origin, resourseUrl),
                     responseType: resources[tag].type,
                     element: element,
-                    tag: tag as keyof typeof resources,
-                    shouldDownload: resources[tag].shouldDownload?.(element)
+                    tag: tag as keyof typeof resources
                 });
             });
         });
@@ -156,9 +148,7 @@ export class PageLoader {
 
     private async downloadResources(resourcesToDownload: IExtractedResource[], outputDir: string) {
         const results = await Promise.all(
-            resourcesToDownload
-                .filter((resource) => resource.shouldDownload)
-                .map((resource) => this.downloadResource(resource, outputDir))
+            resourcesToDownload.map((resource) => this.downloadResource(resource, outputDir))
         );
 
         const failed = results.filter((requestResult) => requestResult.error !== null);

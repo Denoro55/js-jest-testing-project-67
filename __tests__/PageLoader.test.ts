@@ -65,7 +65,7 @@ describe('PageLoader', () => {
             .get(/\/.*\.(js|css)/)
             .times(2)
             .reply(200);
-        const request = nock(REQUEST_DOMAIN_HEXLET).get('/courses').reply(200, responseMock);
+        const request = nock(REQUEST_DOMAIN_HEXLET).get('/courses').times(2).reply(200, responseMock);
         const imageRequest = nock(REQUEST_DOMAIN_HEXLET)
             .get('/assets/professions/nodejs.png')
             .reply(200, imageResponseMock);
