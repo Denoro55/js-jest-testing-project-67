@@ -59,7 +59,7 @@ function isSameDomain(baseUrl: string, resourceUrl: string) {
 export class PageLoader {
     private outputPath: string;
 
-    constructor(outputPath: string) {
+    constructor(outputPath: string = process.cwd()) {
         this.outputPath = outputPath;
     }
 

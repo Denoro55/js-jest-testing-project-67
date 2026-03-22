@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import path from 'path';
 import { Command } from 'commander';
 import debug from 'debug';
 
@@ -17,7 +16,7 @@ program
     .version('1.0.0')
     .description('Load a page')
     .arguments('<url>')
-    .option('-o, --output <path>', 'output path', path.join(process.cwd(), 'output'))
+    .option('-o, --output <path>', 'output path')
     .option('-d, --debug', 'enable debug logs')
     .action(async (url, options) => {
         if (options.debug) {
