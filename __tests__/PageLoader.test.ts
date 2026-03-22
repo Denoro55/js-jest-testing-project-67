@@ -2,7 +2,7 @@ import nock from 'nock';
 import path from 'path';
 import fs from 'fs/promises';
 
-import { PageLoader } from '../src/PageLoader';
+import pageLoader from '../index';
 
 const REQUEST_DOMAIN_EXAMPLE = 'https://example.com';
 const REQUEST_DOMAIN_HEXLET = 'https://ru.hexlet.io';
@@ -28,9 +28,7 @@ describe('PageLoader', () => {
 
         const request = nock(REQUEST_DOMAIN_EXAMPLE).get('/').reply(200, expectedHtml);
 
-        const pageLoader = new PageLoader(tempDir);
-
-        await pageLoader.load(REQUEST_DOMAIN_EXAMPLE);
+        await pageLoader(REQUEST_DOMAIN_EXAMPLE, tempDir);
 
         const html = await fs.readFile(path.join(tempDir, 'example-com.html'), 'utf8');
 
@@ -48,9 +46,7 @@ describe('PageLoader', () => {
             .get('/assets/professions/nodejs.png')
             .reply(200, imageResponseMock);
 
-        const pageLoader = new PageLoader(tempDir);
-
-        await pageLoader.load(`${REQUEST_DOMAIN_HEXLET}/courses`);
+        await pageLoader(`${REQUEST_DOMAIN_HEXLET}/courses`, tempDir);
 
         const responseHtml = await fs.readFile(path.join(tempDir, 'ru-hexlet-io-courses.html'), 'utf8');
         const expectedHtml = await loadFixture('hexlet-local-expected.html', 'utf8');
@@ -74,9 +70,7 @@ describe('PageLoader', () => {
             .get('/assets/professions/nodejs.png')
             .reply(200, imageResponseMock);
 
-        const pageLoader = new PageLoader(tempDir);
-
-        await pageLoader.load(`${REQUEST_DOMAIN_HEXLET}/courses`);
+        await pageLoader(`${REQUEST_DOMAIN_HEXLET}/courses`, tempDir);
 
         const responseHtml = await fs.readFile(path.join(tempDir, 'ru-hexlet-io-courses.html'), 'utf8');
         const expectedHtml = await loadFixture('hexlet-local-expected-2.html', 'utf8');
@@ -89,8 +83,6 @@ describe('PageLoader', () => {
     });
 
     it('The program throws an error if the URL is invalid', async () => {
-        const pageLoader = new PageLoader(tempDir);
-
-        await expect(pageLoader.load('wrong-domain.com')).rejects.toThrow('Invalid URL');
+        await expect(pageLoader('wrong-domain.com', tempDir)).rejects.toThrow('Invalid URL');
     });
 });
