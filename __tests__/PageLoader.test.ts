@@ -1,8 +1,11 @@
 import nock from 'nock';
 import path from 'path';
 import fs from 'fs/promises';
+import axios from 'axios';
 
 import pageLoader from '../src/index';
+
+axios.defaults.adapter = 'http';
 
 const REQUEST_DOMAIN_EXAMPLE = 'https://example.com';
 const REQUEST_DOMAIN_HEXLET = 'https://ru.hexlet.io';
