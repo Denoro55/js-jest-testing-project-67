@@ -17,6 +17,8 @@ describe('PageLoader', () => {
     beforeEach(async () => {
         tempDir = await fs.mkdtemp(path.join(path.join(__dirname), 'temp'));
         nock.cleanAll();
+        // Разрешить только замоканные запросы, блокировать реальные
+        nock.disableNetConnect();
     });
 
     afterEach(async () => {
