@@ -2,7 +2,7 @@ import nock from 'nock';
 import path from 'path';
 import fs from 'fs/promises';
 
-import pageLoader from '../index';
+import pageLoader from '../src/index';
 
 const REQUEST_DOMAIN_EXAMPLE = 'https://example.com';
 const REQUEST_DOMAIN_HEXLET = 'https://ru.hexlet.io';
