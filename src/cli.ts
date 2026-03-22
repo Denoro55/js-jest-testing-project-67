@@ -5,6 +5,8 @@ import debug from 'debug';
 
 import { PageLoader } from './PageLoader.js';
 
+const debugLog = debug('page-loader:cli');
+
 const originalError = console.error;
 console.error = (...args) => {
     originalError('\x1b[31m%s\x1b[0m', args.join(' '));
@@ -23,13 +25,15 @@ program
             debug.enable('axios,page-loader:*');
         }
 
-        console.info('Запуск программы:', url, options);
+        debugLog('Запуск программы:', url, options);
 
         const pageLoader = new PageLoader(options.output);
 
-        await pageLoader.load(url);
+        const result = await pageLoader.load(url);
 
-        console.info('Завершение программы');
+        console.info(result.filepath);
+
+        debugLog('Завершение программы');
     });
 
 program.parseAsync(process.argv).catch((error) => {
