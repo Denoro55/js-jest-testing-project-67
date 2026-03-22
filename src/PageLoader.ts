@@ -30,14 +30,14 @@ const resources: Record<
     },
     link: {
         attribute: 'href',
-        type: 'text',
+        type: 'arraybuffer',
         shouldDownload: (element: AnyNode) => {
             return 'attribs' in element && element.attribs.rel !== 'canonical';
         }
     },
     script: {
         attribute: 'src',
-        type: 'text',
+        type: 'arraybuffer',
         shouldDownload: () => true
     }
 };
