@@ -6,7 +6,7 @@ import path from 'path';
 import * as cheerio from 'cheerio';
 import { AnyNode } from 'domhandler';
 
-import { getResourceName } from './getResourceName';
+import { getResourceName } from './getResourceName.js';
 
 const debugLog = debug('page-loader:info');
 
