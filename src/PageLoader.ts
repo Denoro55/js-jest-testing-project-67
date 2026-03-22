@@ -75,7 +75,7 @@ export class PageLoader {
         await fs.mkdir(this.outputPath, { recursive: true });
         await fs.mkdir(path.join(this.outputPath, resourcesDirName), { recursive: true });
 
-        const response = await axios.get(url);
+        const response = await axios.get(url, { adapter: 'fetch' });
         const responseHtml = response.data;
 
         const $ = cheerio.load(responseHtml);
@@ -135,7 +135,8 @@ export class PageLoader {
     ): Promise<{ url: string; error: unknown }> {
         try {
             const resourseResponse = await axios.get(resource.url, {
-                responseType: resource.responseType
+                responseType: resource.responseType,
+                adapter: 'fetch'
             });
 
             await this.save(path.join(outputDir, resource.fileName), resourseResponse.data);
