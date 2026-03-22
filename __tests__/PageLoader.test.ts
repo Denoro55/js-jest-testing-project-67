@@ -87,4 +87,10 @@ describe('PageLoader', () => {
         expect(imageRequest.isDone()).toBe(true);
         expect(resourcesRequests.isDone()).toBe(true);
     });
+
+    it('The program throws an error if the URL is invalid', async () => {
+        const pageLoader = new PageLoader(tempDir);
+
+        await expect(pageLoader.load('wrong-domain.com')).rejects.toThrow('Invalid URL');
+    });
 });
