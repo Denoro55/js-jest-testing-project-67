@@ -4,8 +4,8 @@ import fs from 'fs/promises';
 
 import pageLoader from '../src/index';
 
-const REQUEST_DOMAIN_EXAMPLE = 'https://example.com';
-const REQUEST_DOMAIN_HEXLET = 'https://ru.hexlet.io';
+const REQUEST_DOMAIN_EXAMPLE = 'https://example.com:443';
+const REQUEST_DOMAIN_HEXLET = 'https://ru.hexlet.io:443';
 
 function loadFixture(fileName: string, encoding?: BufferEncoding) {
     return fs.readFile(path.join(__dirname, '__fixtures__', fileName), encoding);
