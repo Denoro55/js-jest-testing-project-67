@@ -5,8 +5,8 @@
     "bin": {
         "page-loader": "dist/cli.js"
     },
-    "main": "dist/PageLoader.js",
-    "types": "dist/PageLoader.d.ts",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
         "prepare": "npm run build",
         "test": "jest",

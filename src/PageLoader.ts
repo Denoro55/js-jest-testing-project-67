@@ -105,7 +105,11 @@ export class PageLoader {
 
         await this.save(htmlFileName, $.html());
 
-        debugLog(`Путь к загруженному файлу: ${path.resolve(path.join(this.outputPath, htmlFileName))}`);
+        const filepath = path.resolve(path.join(this.outputPath, htmlFileName));
+
+        debugLog(`Путь к загруженному файлу: ${filepath}`);
+
+        return { filepath };
     }
 
     private extractResources($: cheerio.CheerioAPI, parsedUrl: URL) {
