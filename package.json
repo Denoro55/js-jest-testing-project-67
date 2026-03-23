@@ -10,7 +10,7 @@
     "type": "module",
     "scripts": {
         "prepare": "npm run build",
-        "test": "node --experimental-vm-modules node_modules/.bin/jest",
+        "test": "jest",
         "prettier": "prettier --write .",
         "page-loader": "tsx src/cli.ts",
         "build": "tsc && shx chmod +x dist/cli.js",
