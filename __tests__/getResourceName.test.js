@@ -1,11 +1,13 @@
-console.info('===> test 1');
+import { jest } from '@jest/globals'
 
-const sum = (a, b) => a + b;
+console.info('===> test 1')
 
-test('should return the sum of two numbers', () => {
-    console.info('===> test 2');
-    
-    expect(sum(1, 2)).toBe(3);
+const sum = (a, b) => a + b
 
-    console.info('===> test 3');
-});
+jest.test('should return the sum of two numbers', () => {
+  console.info('===> test 2')
+
+  jest.expect(sum(1, 2)).toBe(3)
+
+  console.info('===> test 3')
+})

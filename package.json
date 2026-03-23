@@ -18,7 +18,7 @@
     },
     "scripts": {
         "prepare": "npm run build",
-        "test": "jest",
+        "test": "jest --colors --runInBand --bail",
         "prettier": "prettier --write .",
         "page-loader": "tsx src/cli.ts",
         "build": "tsc && tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}' > dist/esm/package.json && shx chmod +x dist/cjs/cli.js",
