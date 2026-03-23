@@ -1,11 +1,11 @@
 console.info('===> test 1');
 
-describe('getResourceName', () => {
+const sum = (a, b) => a + b;
+
+test('should return the sum of two numbers', () => {
     console.info('===> test 2');
+    
+    expect(sum(1, 2)).toBe(3);
 
-    it('should return the name of the resource', () => {
-        console.info('===> test 3');
-
-        expect(true).toBe(true);
-    });
+    console.info('===> test 3');
 });
