@@ -8,6 +8,8 @@ const REQUEST_DOMAIN_EXAMPLE = 'https://example.com';
 const REQUEST_DOMAIN_HEXLET = 'https://ru.hexlet.io';
 
 function loadFixture(fileName: string, encoding?: BufferEncoding) {
+    console.info('loadFixture ===> ', __dirname, fileName);
+
     return fs.readFile(path.join(__dirname, '__fixtures__', fileName), encoding);
 }
 
