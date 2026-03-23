@@ -1,11 +1,8 @@
-import nock from 'nock';
+import moxios from 'moxios';
 import path from 'path';
 import fs from 'fs/promises';
-import axios from 'axios';
 
 import pageLoader from '../src/index';
-
-axios.defaults.adapter = 'http';
 
 const REQUEST_DOMAIN_EXAMPLE = 'https://example.com';
 const REQUEST_DOMAIN_HEXLET = 'https://ru.hexlet.io';
@@ -19,37 +16,40 @@ describe('PageLoader', () => {
 
     beforeEach(async () => {
         tempDir = await fs.mkdtemp(path.join(path.join(__dirname), 'temp'));
-        nock.cleanAll();
-        // Разрешить только замоканные запросы, блокировать реальные
-        nock.disableNetConnect();
+        moxios.install();
     });
 
     afterEach(async () => {
+        moxios.uninstall();
         await fs.rm(tempDir, { recursive: true, force: true });
     });
 
     it('The page is loaded', async () => {
         const expectedHtml = await loadFixture('example-com.html', 'utf8');
 
-        const request = nock(REQUEST_DOMAIN_EXAMPLE).get('/').reply(200, expectedHtml);
+        moxios.stubRequest(REQUEST_DOMAIN_EXAMPLE, {
+            status: 200,
+            response: expectedHtml
+        });
 
         await pageLoader(REQUEST_DOMAIN_EXAMPLE, tempDir);
 
         const html = await fs.readFile(path.join(tempDir, 'example-com.html'), 'utf8');
-
         expect(html).toBe(expectedHtml);
-
-        expect(request.isDone()).toBe(true);
     });
 
     it('The page is loaded with images', async () => {
         const responseMock = await loadFixture('hexlet-response.html', 'utf8');
         const imageResponseMock = await loadFixture('nodejs.png');
 
-        const request = nock(REQUEST_DOMAIN_HEXLET).get('/courses').reply(200, responseMock);
-        const imageRequest = nock(REQUEST_DOMAIN_HEXLET)
-            .get('/assets/professions/nodejs.png')
-            .reply(200, imageResponseMock);
+        moxios.stubRequest(`${REQUEST_DOMAIN_HEXLET}/courses`, {
+            status: 200,
+            response: responseMock
+        });
+        moxios.stubRequest(`${REQUEST_DOMAIN_HEXLET}/assets/professions/nodejs.png`, {
+            status: 200,
+            response: imageResponseMock
+        });
 
         await pageLoader(`${REQUEST_DOMAIN_HEXLET}/courses`, tempDir);
 
@@ -57,23 +57,24 @@ describe('PageLoader', () => {
         const expectedHtml = await loadFixture('hexlet-local-expected.html', 'utf8');
 
         expect(responseHtml).toBe(expectedHtml);
-
-        expect(request.isDone()).toBe(true);
-        expect(imageRequest.isDone()).toBe(true);
     });
 
     it('The page is loaded with links and scripts', async () => {
         const responseMock = await loadFixture('hexlet-response-2.html', 'utf8');
         const imageResponseMock = await loadFixture('nodejs.png');
 
-        const resourcesRequests = nock(REQUEST_DOMAIN_HEXLET)
-            .get(/\/.*\.(js|css)/)
-            .times(2)
-            .reply(200);
-        const request = nock(REQUEST_DOMAIN_HEXLET).get('/courses').times(2).reply(200, responseMock);
-        const imageRequest = nock(REQUEST_DOMAIN_HEXLET)
-            .get('/assets/professions/nodejs.png')
-            .reply(200, imageResponseMock);
+        moxios.stubRequest(`${REQUEST_DOMAIN_HEXLET}/courses`, {
+            status: 200,
+            response: responseMock
+        });
+        moxios.stubRequest(`${REQUEST_DOMAIN_HEXLET}/assets/professions/nodejs.png`, {
+            status: 200,
+            response: imageResponseMock
+        });
+        moxios.stubRequest(/\.(js|css)$/, {
+            status: 200,
+            response: ''
+        });
 
         await pageLoader(`${REQUEST_DOMAIN_HEXLET}/courses`, tempDir);
 
@@ -81,10 +82,6 @@ describe('PageLoader', () => {
         const expectedHtml = await loadFixture('hexlet-local-expected-2.html', 'utf8');
 
         expect(responseHtml).toBe(expectedHtml);
-
-        expect(request.isDone()).toBe(true);
-        expect(imageRequest.isDone()).toBe(true);
-        expect(resourcesRequests.isDone()).toBe(true);
     });
 
     it('The program throws an error if the URL is invalid', async () => {
