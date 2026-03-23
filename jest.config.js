@@ -2,7 +2,7 @@
 export default {
     testEnvironment: 'node',
     // Тестовые файлы
-    testMatch: ['**/__tests__/**/*.test.js'],
+    testMatch: ['**/__tests__/**/*.test.ts'],
     // Генерация покрытия кода
     collectCoverage: false,
     coverageDirectory: 'coverage', // папка для отчётов
