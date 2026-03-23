@@ -100,6 +100,8 @@ export class PageLoader {
 
         const filepath = path.resolve(path.join(this.outputPath, htmlFileName));
 
+        console.info('my page loader ended ===> ', filepath);
+
         debugLog(`Путь к загруженному файлу: ${filepath}`);
 
         return { filepath };
