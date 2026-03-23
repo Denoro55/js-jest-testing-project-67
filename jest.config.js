@@ -1,5 +1,5 @@
 /** @type {import('jest').Config} */
-export default {
+module.exports = {
     testEnvironment: 'node',
     // Тестовые файлы
     testMatch: ['**/__tests__/**/*.test.ts'],
@@ -12,11 +12,4 @@ export default {
     collectCoverageFrom: [
       'src/**/*.js',
     ],
-    transform: {
-      '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
-    },
-    // Поддержка ESM
-    moduleNameMapper: {
-      '^(\\.{1,2}/.*)\\.js$': '$1',
-    },
   }
