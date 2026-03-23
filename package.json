@@ -7,6 +7,9 @@
     },
     "main": "dist/cjs/index.js",
     "types": "dist/cjs/index.d.ts",
+    "engines": {
+        "node": "22.22.1"
+    },
     "exports": {
         ".": {
             "import": "./dist/esm/index.js",
