@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   testEnvironment: 'node',
   setupFilesAfterEnv: [],
   // Указываем, что тесты используют глобальный Jest
