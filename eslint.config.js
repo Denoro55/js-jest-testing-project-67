@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 
 export default [
-    { ignores: ['dist/', 'jest.config.js', '__tests__/__fixtures__/'] },
+    { ignores: ['dist/', 'jest.config.js', 'jest.setup.js', '__tests__/__fixtures__/'] },
     js.configs.recommended,
     ...tseslint.configs.recommended,
     eslintPluginPrettier
