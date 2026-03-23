@@ -7,7 +7,6 @@
     },
     "main": "dist/cjs/index.js",
     "types": "dist/cjs/index.d.ts",
-    "type": "module",
     "engines": {
         "node": "22.22.1"
     },
