@@ -1,6 +1,6 @@
 import { describe, it, expect } from '@jest/globals'
 
-import { getResourceName } from '../src/getResourceName'
+import { getResourceName } from '../src/getResourceName.js'
 
 describe('getResourceName', () => {
   it('should return the name of the resource', () => {
