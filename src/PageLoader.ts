@@ -73,7 +73,7 @@ export class PageLoader {
         const resourcesDirName = `${urlName}_files`;
 
         await fs.mkdir(this.outputPath, { recursive: true });
-        await fs.mkdir(path.join(this.outputPath, resourcesDirName), { recursive: true });
+        // await fs.mkdir(path.join(this.outputPath, resourcesDirName), { recursive: true });
 
         const response = await axios.get(url);
         const responseHtml = response.data;
@@ -144,7 +144,9 @@ export class PageLoader {
 
             return { url: resource.url, error: null };
         } catch (error: unknown) {
-            return { url: resource.url, error };
+            throw new Error(`${error instanceof Error ? error.message : error}, ${resource.url}`);
+        
+            // return { url: resource.url, error };
         }
     }
 
@@ -153,11 +155,11 @@ export class PageLoader {
             resourcesToDownload.map((resource) => this.downloadResource(resource, outputDir))
         );
 
-        const failed = results.filter((requestResult) => requestResult.error !== null);
+        // const failed = results.filter((requestResult) => requestResult.error !== null);
 
-        failed.forEach(({ url, error }) => {
-            console.error('Ошибка при загрузке ресурса:', url, error instanceof Error ? error.message : error);
-        });
+        // failed.forEach(({ url, error }) => {
+        //     console.error('Ошибка при загрузке ресурса:', url, error instanceof Error ? error.message : error);
+        // });
     }
 
     private updateResourcesUrls(
