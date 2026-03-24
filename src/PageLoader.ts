@@ -73,7 +73,7 @@ export class PageLoader {
         const resourcesDirName = `${urlName}_files`;
 
         await fs.mkdir(this.outputPath, { recursive: true });
-        // await fs.mkdir(path.join(this.outputPath, resourcesDirName), { recursive: true });
+        await fs.mkdir(path.join(this.outputPath, resourcesDirName), { recursive: true });
 
         const response = await axios.get(url);
         const responseHtml = response.data;
